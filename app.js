@@ -56,7 +56,7 @@ app.get('/movies/:movieId/', async (request, response) =>{
     const {movieId} = request.params;
     const getMovieQuery = `
     SELECT * FROM movies
-    WHERE movie_id = '${movieId}';
+    WHERE movie_id = ${movieId};
     `;
     const movie = await database.get(getMovieQuery);
     response.send(convertDbObjectToResponseObj(movie));
@@ -83,7 +83,7 @@ app.put('/movies/:movieId/', async(request, response)=>{
     director_id = '${directorId}',
     movie_name = '${movieName}',
     lead_actor = '${leadActor}'
-    WHERE movie_id = '${movieId}';
+    WHERE movie_id = ${movieId};
     `;
     await database.run(updateMovieQuery);
     response.send("Movie Details Updated");
@@ -94,7 +94,7 @@ app.delete("/movies/:movieId/", async (request, response) =>{
     const movieId = request.params;
     const deleteMovieQuery = `
     DELETE FROM movies
-    WHERE movie_id = '${movieId}'
+    WHERE movie_id = ${movieId}
     `;
     await database.run(deleteMovieQuery);
     response.send("Movie Removed");
@@ -118,7 +118,7 @@ app.get('/directors/:directorId/movies/', (request, response) =>{
     const {directorId} = request.params;
     const getDirectorQuery = `
     SELECT * FROM movies
-    WHERE director_id = '${directorId}';
+    WHERE director_id = ${directorId};
     `;
 
      const director = await database.all(getDirectorQuery);
