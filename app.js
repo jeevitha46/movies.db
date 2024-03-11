@@ -114,7 +114,7 @@ app.get('/directors/', async (request, response) =>{
 });
 
 
-app.get('/directors/:directorId/movies/', (request, response) =>{
+app.get('/directors/:directorId/movies/', async(request, response) =>{
     const {directorId} = request.params;
     const getDirectorQuery = `
     SELECT * FROM movies
