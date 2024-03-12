@@ -5,7 +5,7 @@ const path = require('path');
 
 const dbPath = path.join(__dirname, 'moviesData.db');
 
-const app = express;
+const app = express();
 app.use(express.json());
 
 
@@ -17,9 +17,9 @@ const initializeDbWithServer = async () =>{
         filename: dbPath,
         driver: sqlite3.Database,
     });
-    app.listen(3000, () =>
-    console.log('Server Running at http://localhost:3000/');
-    );
+    app.listen(3000, () => {
+    console.log('Server Running at http://localhost:3000/')
+    });
     } catch(error){
         console.log(`DB Error: ${error.message}`);
         process.exit(1);
@@ -64,10 +64,10 @@ app.get('/movies/:movieId/', async (request, response) =>{
 
 
 app.post('/movies/', async(request, response) =>{
-    const {directorId, movieName, leadActor} = response.body;
+    const {directorId, movieName, leadActor} = request.body;
     const postMovieQuery =`
     INSERT INTO movies (director_id, movie_name, lead_actor)
-    VALUES (`${directorId}, ${movieName}, ${leadActor}`);
+    VALUES (${directorId}, '${movieName}', '${leadActor}');
     `;
     const movie = await database.run(postMovieQuery);
     response.send("Movie Successfully Added");
