@@ -42,7 +42,7 @@ const convertDbObjectToResponseObject = (dbObject) =>{
 
 app.get('/movies/', async (request, response)=>{
     const getMovieQuery = `
-    SELECT * FROM movies
+    SELECT * FROM movie
     `;
     const movie = await database.all(getMovieQuery);
     response.send(
@@ -55,7 +55,7 @@ app.get('/movies/', async (request, response)=>{
 app.get('/movies/:movieId/', async (request, response) =>{
     const {movieId} = request.params;
     const getMovieQuery = `
-    SELECT * FROM movies
+    SELECT * FROM movie
     WHERE movie_id = ${movieId};
     `;
     const movie = await database.get(getMovieQuery);
@@ -66,7 +66,7 @@ app.get('/movies/:movieId/', async (request, response) =>{
 app.post('/movies/', async(request, response) =>{
     const {directorId, movieName, leadActor} = request.body;
     const postMovieQuery =`
-    INSERT INTO movies (director_id, movie_name, lead_actor)
+    INSERT INTO movie (director_id, movie_name, lead_actor)
     VALUES (${directorId}, '${movieName}', '${leadActor}');
     `;
     const movie = await database.run(postMovieQuery);
@@ -93,7 +93,7 @@ app.put('/movies/:movieId/', async(request, response)=>{
 app.delete("/movies/:movieId/", async (request, response) =>{
     const movieId = request.params;
     const deleteMovieQuery = `
-    DELETE FROM movies
+    DELETE FROM movie
     WHERE movie_id = ${movieId}
     `;
     await database.run(deleteMovieQuery);
@@ -103,7 +103,7 @@ app.delete("/movies/:movieId/", async (request, response) =>{
 
 app.get('/directors/', async (request, response) =>{
     const getDirectorQuery = `
-    SELECT * FROM movies
+    SELECT * FROM director
     `;
     const directorArray = await database.all(getDirectorQuery);
     response.send(
@@ -117,7 +117,7 @@ app.get('/directors/', async (request, response) =>{
 app.get('/directors/:directorId/movies/', async(request, response) =>{
     const {directorId} = request.params;
     const getDirectorQuery = `
-    SELECT * FROM movies
+    SELECT * FROM director
     WHERE director_id = ${directorId};
     `;
 
